@@ -116,7 +116,7 @@ contract EVVMERC3009Treasury {
         address from, address token, uint256 depositAmount, uint256 feeAmount,
         address authorizedExecutor, uint256 validAfter, uint256 validBefore,
         bytes32 userSalt, uint8 v, bytes32 r, bytes32 s
-    ) external nonReentrant {
+    ) external payable nonReentrant {
         if (msg.value != 0) revert InvalidNativeValue();
         if (from == address(0) || depositAmount == 0 || feeAmount == 0) revert InvalidAmount();
         if (!supportedERC3009Token[token]) revert UnsupportedToken();
