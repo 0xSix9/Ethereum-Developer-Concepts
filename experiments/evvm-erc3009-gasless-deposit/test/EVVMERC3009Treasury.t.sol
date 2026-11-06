@@ -188,6 +188,47 @@ contract EVVMERC3009TreasuryTest {
         );
     }
 
+    function testNonStakerCannotRelay() public {
+        address outsider = address(0xD00D);
+        vm.expectRevert(EVVMERC3009Treasury.CallerNotStaker.selector);
+        vm.prank(outsider);
+        treasury.depositWithAuthorization(
+            user, address(token), DEPOSIT, FEE, address(0),
+            block.timestamp, block.timestamp + 1 days,
+            keccak256("non-staker"), 27, bytes32(0), bytes32(0)
+        );
+    }
+
+    function testUnsupportedTokenRejected() public {
+        MockERC3009Token unsupported = new MockERC3009Token();
+        vm.expectRevert(EVVMERC3009Treasury.UnsupportedToken.selector);
+        vm.prank(fisher);
+        treasury.depositWithAuthorization(
+            user, address(unsupported), DEPOSIT, FEE, address(0),
+            block.timestamp, block.timestamp + 1 days,
+            keccak256("unsupported-token"), 27, bytes32(0), bytes32(0)
+        );
+    }
+
+    function testExpiredAuthorizationRejected() public {
+        uint256 validAfter = block.timestamp - 2 days;
+        uint256 validBefore = block.timestamp - 1;
+        bytes32 salt = keccak256("expired-authorization");
+        bytes32 nonce = treasury.computeAuthorizationNonce(
+            user, address(token), DEPOSIT, FEE, address(0), salt
+        );
+        (uint8 v, bytes32 r, bytes32 s) = _sign(
+            DEPOSIT + FEE, validAfter, validBefore, nonce
+        );
+
+        vm.expectRevert(MockERC3009Token.AuthorizationExpired.selector);
+        vm.prank(fisher);
+        treasury.depositWithAuthorization(
+            user, address(token), DEPOSIT, FEE, address(0),
+            validAfter, validBefore, salt, v, r, s
+        );
+    }
+
     function _sign(
         uint256 value, uint256 validAfter, uint256 validBefore, bytes32 nonce
     ) private returns (uint8 v, bytes32 r, bytes32 s) {
