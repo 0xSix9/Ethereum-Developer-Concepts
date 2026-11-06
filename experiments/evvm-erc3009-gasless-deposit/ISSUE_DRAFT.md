@@ -56,6 +56,8 @@ I prepared a non-production reference implementation and Foundry tests here:
 
 [ERC-3009 gasless-deposit PoC branch](https://github.com/0xSix9/Ethereum-Developer-Concepts/tree/proposal/evvm-erc3009-gasless-deposit/experiments/evvm-erc3009-gasless-deposit)
 
-The tests cover the fee split, executor binding, parameter-tampering resistance, and authorization replay. They have not yet been run in my current environment, so this is a reviewable PoC rather than audited or production-ready code.
+The Foundry tests currently pass in GitHub Actions: 5 passed, 0 failed (Solidity 0.8.24). They cover fee splitting, replay protection, executor binding, amount tampering, non-staker rejection, unsupported-token rejection, and expired authorizations. CI run: https://github.com/0xSix9/Ethereum-Developer-Concepts/actions/runs/42299440620.
+
+These tests use a mock Core and mock ERC-3009 token; they do not establish end-to-end compatibility with a deployed EVVM instance or production readiness. This remains an unaudited reference PoC.
 
 Would the team consider this direction? In particular, would you prefer it as an extension of the current Treasury, a separate Treasury implementation for new deployments, or a migration/authorized-credit path for existing EVVM instances?
