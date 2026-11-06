@@ -13,6 +13,7 @@ interface Vm {
     function sign(uint256 privateKey, bytes32 digest) external returns (uint8 v, bytes32 r, bytes32 s);
     function prank(address sender) external;
     function expectRevert(bytes4 selector) external;
+    function warp(uint256 timestamp) external;
 }
 
 contract MockCore is IEVVMCore {
@@ -211,6 +212,7 @@ contract EVVMERC3009TreasuryTest {
     }
 
     function testExpiredAuthorizationRejected() public {
+        vm.warp(3 days);
         uint256 validAfter = block.timestamp - 2 days;
         uint256 validBefore = block.timestamp - 1;
         bytes32 salt = keccak256("expired-authorization");
