@@ -43,7 +43,9 @@ The Fisher receives the relayer share in the deposited token as an EVVM internal
 
 ## Test status
 
-The Foundry test suite is included in \`test/\`. It covers the fee split, executor binding, signature parameter tampering, and replay protection. Tests have **not** been run in this environment because \`forge\` and \`solc\` are unavailable. Treat this as a reviewable PoC, not audited or deployable production code.
+The Foundry test suite is included in \`test/\` and runs through GitHub Actions. The latest CI run compiled with Solidity 0.8.24 and passed **5 tests (0 failed)**: fee split and replay protection, executor binding and amount-tampering resistance, non-staker rejection, unsupported-token rejection, and expired-authorization rejection. See the [CI run](https://github.com/0xSix9/Ethereum-Developer-Concepts/actions/runs/42299440620).
+
+These tests use a **mock Core and mock ERC-3009 token**. They verify the PoC's isolated behavior, but do not prove end-to-end compatibility with a deployed EVVM instance, every ERC-3009 token, or production gas economics. Treat this as a reviewable, unaudited PoC—not production-ready code.
 
 ## Source references
 
