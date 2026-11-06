@@ -1,0 +1,22 @@
+EVVM NONCOMMERCIAL LICENSE v1.0
+
+Copyright (c) 2025 MATE Labs Inc., a Delaware corporation
+
+This software is licensed under a modified PolyForm Noncommercial License 1.0.0
+with additional share-alike requirements. It may be used, modified, and
+distributed for noncommercial purposes only. Commercial use requires a separate
+license from MATE Labs Inc.
+
+Full base license:
+https://polyformproject.org/licenses/noncommercial/1.0.0/
+
+Full EVVM license and additional share-alike terms:
+https://www.evvm.org/docs/EVVMNoncommercialLicense
+
+This reference implementation is provided "AS IS", without warranty. See the
+full license URLs above for all terms, restrictions, notices, share-alike
+duties, and commercial licensing inquiries.
+
+Attribution: Independent community reference implementation for EVVM.
+Original software/interfaces: EVVM, licensed by MATE Labs Inc.
+Modifications: ERC-3009 gas-sponsored deposits and fee-split reference code.
